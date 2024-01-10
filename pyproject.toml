@@ -22,7 +22,7 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
+dependencies = ["pymatrix"]
 
 [project.urls]
 Documentation = "https://github.com/unknown/pointer-brakes#readme"
@@ -33,7 +33,7 @@ Source = "https://github.com/unknown/pointer-brakes"
 path = "src/pointer_brakes/__about__.py"
 
 [tool.hatch.envs.default]
-dependencies = ["coverage[toml]>=6.5", "pytest"]
+dependencies = ["coverage[toml]>=6.5", "pytest", "pytweening"]
 
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
@@ -48,7 +48,11 @@ python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
 dependencies = ["mypy>=1.0.0"]
 
 [tool.hatch.envs.types.scripts]
-check = "mypy --install-types --non-interactive {args:src/pointer_brakes tests}"
+check = """
+mypy --disable-error-code=import-not-found --disable-error-code=import-untyped \
+--check-untyped-defs --install-types --non-interactive \
+{args:src/pointer_brakes tests} \
+"""
 
 [tool.coverage.run]
 source_pkgs = ["pointer_brakes", "tests"]
@@ -62,3 +66,6 @@ tests = ["tests", "*/pointer-brakes/tests"]
 
 [tool.coverage.report]
 exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
+
+[tool.black]
+line-length = 120
