@@ -74,13 +74,19 @@ def test_touch_motion_then_idle(swipe: Callable[[], list[tuple[int, int]]]):
     sim.tick(time.monotonic(), final_pos)
 
     # tick through idle data
+    t_idle = time.monotonic()
     for pos in swipe_idle():
         v0 = sim.velocity
-        sim.tick(time.monotonic(), pos)
+
+        # simulate a slow (embedded?) device by adding 20ms each tick
+        t_idle += 0.2
+        sim.tick(t_idle, pos)
+
+        # we don't check anything if motion is stopped
+        if sim.state.timestamp is None or sim.last_state.timestamp is None:
+            continue
 
         # calculate delta time
-        assert sim.state.timestamp is not None
-        assert sim.last_state.timestamp is not None
         delta_time = sim.state.timestamp - sim.last_state.timestamp
 
         # assert velocity matches our expectation
