@@ -34,7 +34,8 @@ jobs:
         run: hatch run update-deps
 
       - name: Check for changes to lockfiles
-        run: ! git status --short --untracked-files=all | grep -E 'requirements.*\.txt'
+        run: >
+          ! git status --short --untracked-files=all | grep -E 'requirements.*\.txt'
 
   run:
     name: Python ${{ matrix.python-version }} on ${{ startsWith(matrix.os, 'macos-') && 'macOS' || startsWith(matrix.os, 'windows-') && 'Windows' || 'Linux' }}
