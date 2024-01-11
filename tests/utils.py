@@ -1,8 +1,22 @@
 from __future__ import annotations
 
+import time
 from math import hypot
+from typing import TYPE_CHECKING
 
 from pytweening import getLine
+
+if TYPE_CHECKING:
+    from pointer_brakes import PointerMotionSim
+
+
+def prep_sim_for_rolling(sim: PointerMotionSim, p1: tuple[int, int], p2: tuple[int, int], v12: float):
+    delta_time = get_delta_time(p1, p2, v12)
+
+    # run sim with contrived data
+    t0 = time.monotonic()
+    sim.tick(t0, p1)
+    sim.tick(t0 + delta_time, p2)
 
 
 def get_delta_time(p1: tuple[int, int], p2: tuple[int, int], v12: float):
