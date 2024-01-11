@@ -18,6 +18,8 @@ def prep_sim_for_rolling(sim: PointerMotionSim, p1: tuple[int, int], p2: tuple[i
     sim.tick(t0, p1)
     sim.tick(t0 + delta_time, p2)
 
+    return t0 + delta_time
+
 
 def get_delta_time(p1: tuple[int, int], p2: tuple[int, int], v12: float):
     # v = distance / delta_time
