@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import time
-from math import hypot, isclose
+from math import isclose
 from typing import Callable
 
 import pytest
@@ -10,7 +10,46 @@ from pointer_brakes import PointerMotionSim
 
 from .utils import distance_between_points, get_delta_time, swipe_idle, swipe_left, swipe_right, swipe_swirl
 
+
 # test touch motion that interrupts rolling motion
+def test_touch_interrupts_rolling():
+    # start rolling motion
+    a_brake = 1
+    sim = PointerMotionSim(a_brake)
+
+    # pick two arbitrary points and find the delta time which would result in a certain velocity
+    v12 = 4
+    p1 = (-32, 15)
+    p2 = (-28, 23)
+    t12 = get_delta_time(p1, p2, v12)
+
+    # run sim with contrived data
+    fake_t = time.monotonic()
+    sim.tick(fake_t, p1)
+    fake_t += t12
+    sim.tick(fake_t, p2)
+
+    # run sim with touch idle to start pointer rolling motion
+    fake_t += 1
+    sim.tick(fake_t)
+
+    # interrupt with touch data
+    p3 = (-4, 84)
+    p4 = (-20, 90)
+    v34 = 7
+    t34 = get_delta_time(p3, p4, v34)
+    fake_t += 0.2
+    sim.tick(fake_t, p3)
+    fake_t += t34
+    sim.tick(fake_t, p4)
+
+    # assert velocity is expected
+    assert sim.velocity
+    assert isclose(sim.velocity.len(), v34)
+
+    # assert delta position is expected
+    assert sim.delta_position
+    assert isclose(sim.delta_position.len(), distance_between_points(p3, p4))
 
 
 # test rolling motion (motion which continues after touch-motion, for example, a finger swipe then idle)
@@ -69,7 +108,7 @@ def test_touch_motion_then_idle(swipe: Callable[[], list[tuple[int, int]]]):
 
 # test simple touch-driven motion (ie. a finger swipe with optional leading idle)
 @pytest.mark.parametrize("swipe", [swipe_right, swipe_left, swipe_swirl, swipe_idle])
-@pytest.mark.parametrize("idle_before", [lambda: [], swipe_idle])
+@pytest.mark.parametrize("idle_before", [list, swipe_idle])
 def test_idle_then_touch_motion(swipe, idle_before):
     sim = PointerMotionSim(31.337)
 
