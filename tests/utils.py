@@ -1,12 +1,22 @@
 from __future__ import annotations
 
-from math import sqrt
+from math import hypot
 
 from pytweening import getLine
 
 
+def get_delta_time(p1: tuple[int, int], p2: tuple[int, int], v12: float):
+    # v = distance / delta_time
+    # delta_time = distance / v
+    return hypot(p2[0] - p1[0], p2[1] - p1[1]) / v12
+
+
 def distance_between_points(p1: tuple[int, int], p2: tuple[int, int]):
-    return sqrt((p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2)
+    return hypot(p2[0] - p1[0], p2[1] - p1[1])
+
+
+def swipe_idle():
+    return 100 * [None]
 
 
 def swipe_left():

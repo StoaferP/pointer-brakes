@@ -6,8 +6,7 @@ from pointer_brakes import PointerMotionSim
 
 from .utils import distance_between_points, swipe_left, swipe_right, swipe_swirl
 
-# a list of Nones for indicating touch input is idle
-TOUCH_IDLE = 100 * [None]
+# test touch motion that interrupts rolling motion
 
 
 # test touch swipe
