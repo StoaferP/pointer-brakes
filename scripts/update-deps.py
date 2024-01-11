@@ -10,7 +10,9 @@ def main():
 
     # run a dummy command in each env causing hatch to ensure deps are in sync
     for env in envs:
-        subprocess.check_output(["hatch", "env", "run", "--env", env, "--", "python", "--version"])  # noqa: S607
+        subprocess.check_output(
+            ["hatch", "--no-color", "env", "run", "--env", env, "--", "python", "--version"]  # noqa: S607
+        )
 
 
 if __name__ == "__main__":
