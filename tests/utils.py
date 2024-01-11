@@ -1,12 +1,36 @@
 from __future__ import annotations
 
-from math import sqrt
+import time
+from math import hypot
+from typing import TYPE_CHECKING
 
 from pytweening import getLine
 
+if TYPE_CHECKING:
+    from pointer_brakes import PointerMotionSim
+
+
+def prep_sim_for_rolling(sim: PointerMotionSim, p1: tuple[int, int], p2: tuple[int, int], v12: float):
+    delta_time = get_delta_time(p1, p2, v12)
+
+    # run sim with contrived data
+    t0 = time.monotonic()
+    sim.tick(t0, p1)
+    sim.tick(t0 + delta_time, p2)
+
+
+def get_delta_time(p1: tuple[int, int], p2: tuple[int, int], v12: float):
+    # v = distance / delta_time
+    # delta_time = distance / v
+    return hypot(p2[0] - p1[0], p2[1] - p1[1]) / v12
+
 
 def distance_between_points(p1: tuple[int, int], p2: tuple[int, int]):
-    return sqrt((p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2)
+    return hypot(p2[0] - p1[0], p2[1] - p1[1])
+
+
+def swipe_idle():
+    return 100 * [None]
 
 
 def swipe_left():

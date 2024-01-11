@@ -2,6 +2,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-from pointer_brakes.sim import PointerMotionSim
+from pointer_brakes._sim import PointerMotionSim
 
 __all__ = ["PointerMotionSim"]
