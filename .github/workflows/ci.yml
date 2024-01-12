@@ -1,13 +1,13 @@
-name: test
+name: CI
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
-    branches: [main, master]
+    branches: [main]
 
 concurrency:
-  group: test-${{ github.head_ref }}
+  group: ci-${{ github.head_ref }}
   cancel-in-progress: true
 
 env:
@@ -36,8 +36,28 @@ jobs:
       - name: Check for changes to lockfiles
         run: >
           ! git status --short --untracked-files=all | grep -E 'requirements.*\.txt'
+  
+  static-analysis:
+      name: Do linting and type checking
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+  
+        - name: Set up Python ${{ env.DEFAULT_PYTHON_VERSION }}
+          uses: actions/setup-python@v4
+          with:
+            python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+  
+        - name: Install Hatch
+          run: pip install --upgrade hatch
 
-  run:
+        - name: Run linting
+          run: hatch fmt --check
+    
+        - name: Run type checking
+          run: hatch run types:check
+
+  test:
     name: Python ${{ matrix.python-version }} on ${{ startsWith(matrix.os, 'macos-') && 'macOS' || startsWith(matrix.os, 'windows-') && 'Windows' || 'Linux' }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -56,9 +76,6 @@ jobs:
 
     - name: Install Hatch
       run: pip install --upgrade hatch
-
-    - name: Run static analysis
-      run: hatch fmt --check
 
     - name: Run tests
       run: hatch run cov
