@@ -28,9 +28,9 @@ jobs:
 
       - uses: actions/cache@v3
         with:
-          key: pointer-breaks-${{ env.cache_id }}
+          key: pointer-brakes-${{ env.cache_id }}
           path: .cache
           restore-keys: |
-            pointer-breaks-
+            pointer-brakes-
 
       - run: hatch run docs:deploy

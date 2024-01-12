@@ -2,7 +2,7 @@
 
 [![PyPI - Version](https://img.shields.io/pypi/v/pointer-brakes.svg)](https://pypi.org/project/pointer-brakes)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pointer-brakes.svg)](https://pypi.org/project/pointer-brakes)
-![Pointer Brakes logo -- generated with OpenAI DALL-E 3](https://chrisargyle.github.io/pointer-breaks/pointer-brakes-logo.png)
+![Pointer Brakes logo -- generated with OpenAI DALL-E 3](https://chrisargyle.github.io/pointer-brakes/pointer-brakes-logo.png)
 
 -----
 
@@ -31,7 +31,7 @@ sim_instance.tick(time.monotonic(), (21, -92))
 change_in_position = sim_instance.delta_position
 ```
 
-For more information check out the [documentation](https://chrisargyle.github.io/pointer-breaks).
+For more information check out the [documentation](https://chrisargyle.github.io/pointer-brakes).
 
 ## License
 
