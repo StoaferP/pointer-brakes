@@ -13,8 +13,30 @@ concurrency:
 env:
   PYTHONUNBUFFERED: "1"
   FORCE_COLOR: "1"
+  DEFAULT_PYTHON_VERSION: "3.10"
 
 jobs:
+  check-deps:
+    name: Ensure dependency lockfiles are in sync
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python ${{ env.DEFAULT_PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+
+      - name: Install Hatch
+        run: pip install --upgrade hatch
+
+      - name: Run update-deps script
+        run: hatch run update-deps
+
+      - name: Check for changes to lockfiles
+        run: >
+          ! git status --short --untracked-files=all | grep -E 'requirements.*\.txt'
+
   run:
     name: Python ${{ matrix.python-version }} on ${{ startsWith(matrix.os, 'macos-') && 'macOS' || startsWith(matrix.os, 'windows-') && 'Windows' || 'Linux' }}
     runs-on: ${{ matrix.os }}
