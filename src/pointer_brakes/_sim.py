@@ -22,14 +22,17 @@ class PointerMotionSim:
     a_braking: float
 
     # simulation state
-    state = State()
-    last_state = State()
+    _state: State
+    _last_state: State
 
     # initial velocity (using during pointer rolling motion)
-    _v0: Matrix | None = None
+    _v0: Matrix | None
 
     def __init__(self, a_braking: float):
         self.a_braking = a_braking
+        self.state = State()
+        self.last_state = State()
+        self._v0 = None
 
     def tick(self, timestamp: float, touch_pos: tuple[int, int] | None = None):
         # if touch is idle and motion is stopped then do nothing

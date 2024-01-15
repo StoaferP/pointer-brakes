@@ -23,11 +23,10 @@ def test_touch_interrupts_rolling():
     # prep sim for pointer rolling
     a_brake = 5
     sim = PointerMotionSim(a_brake)
-    prep_sim_for_rolling(sim, (-32, 15), (-28, 23), 100)
+    fake_t = prep_sim_for_rolling(sim, (-32, 15), (-28, 23), 100)
 
     # run sim with touch idle to start pointer rolling motion
-    assert sim.state.timestamp is not None
-    fake_t = sim.state.timestamp + 1
+    fake_t += 1
     sim.tick(fake_t)
 
     # interrupt with touch data
@@ -55,12 +54,11 @@ def test_rolling_motion_stops_eventually():
     a_brake = 2
     sim = PointerMotionSim(a_brake)
     v_prep = 20
-    prep_sim_for_rolling(sim, (-120, -84), (-23, -39), v_prep)
+    fake_t = prep_sim_for_rolling(sim, (-120, -84), (-23, -39), v_prep)
 
     # run sim with touch idle until we expect pointer motion to stop
     delta_time = v_prep / a_brake  # found by solving v=v0-a*t when v=0
-    assert sim.state.timestamp is not None
-    sim.tick(sim.state.timestamp + delta_time + 0.1)  # fudge 100ms because floating point accuracy
+    sim.tick(fake_t + delta_time + 0.1)  # fudge 100ms because floating point accuracy
 
     # assert motion is stopped
     assert sim.velocity is None
@@ -72,12 +70,11 @@ def test_rolling_motion_correct_calculations():
     a_brake = 7
     sim = PointerMotionSim(a_brake)
     v_prep = 48
-    prep_sim_for_rolling(sim, (12, 3), (-9, 25), v_prep)
+    fake_t = prep_sim_for_rolling(sim, (12, 3), (-9, 25), v_prep)
 
     # run sim with touch idle to so some rolling
     delta_time = 2
-    assert sim.state.timestamp is not None
-    sim.tick(sim.state.timestamp + delta_time)
+    sim.tick(fake_t + delta_time)
 
     # assert velocity and delta_position are calculated as we expect
     assert sim.velocity
@@ -91,7 +88,7 @@ def test_rolling_motion_correct_calculations():
 def test_motion_stopped_then_no_calculations():
     # prep for rolling
     sim = PointerMotionSim(13)
-    prep_sim_for_rolling(sim, (23, -32), (2, -1), 2)
+    _ = prep_sim_for_rolling(sim, (23, -32), (2, -1), 2)
 
     # manually stop motion
     sim.stop_motion()
