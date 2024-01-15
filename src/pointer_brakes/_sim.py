@@ -30,8 +30,8 @@ class PointerMotionSim:
 
     def __init__(self, a_braking: float):
         self.a_braking = a_braking
-        self.state = State()
-        self.last_state = State()
+        self._state = State()
+        self._last_state = State()
         self._v0 = None
 
     def tick(self, timestamp: float, touch_pos: tuple[int, int] | None = None):
@@ -44,39 +44,39 @@ class PointerMotionSim:
             self._v0 = self.velocity
 
         # update simulation state
-        self.last_state = copy.deepcopy(self.state)
-        self.state = copy.deepcopy(EMPTY_STATE)
-        self.state.timestamp = timestamp
+        self._last_state = copy.deepcopy(self._state)
+        self._state = copy.deepcopy(EMPTY_STATE)
+        self._state.timestamp = timestamp
 
         # update touch data if present
-        self.state.touch_pos = touch_pos if touch_pos else None
+        self._state.touch_pos = touch_pos if touch_pos else None
 
     @property
     def delta_time(self):
-        if not self.state.timestamp or not self.last_state.timestamp:
-            raise DeltaTimeInvalidError(self.last_state.timestamp, self.state.timestamp)
+        if not self._state.timestamp or not self._last_state.timestamp:
+            raise DeltaTimeInvalidError(self._last_state.timestamp, self._state.timestamp)
 
-        return self.state.timestamp - self.last_state.timestamp
+        return self._state.timestamp - self._last_state.timestamp
 
     @property
     def velocity(self):
         # if we have blank timestamps then motion is stopped
-        if not self.last_state.timestamp and not self.state.timestamp:
+        if not self._last_state.timestamp and not self._state.timestamp:
             return None
 
         # handle transition from idle to touch motion
-        if self.state.touch_pos and not self.last_state.touch_pos:
+        if self._state.touch_pos and not self._last_state.touch_pos:
             return None
 
         # handle touch-driven motion
-        if self.last_state.touch_pos and self.state.touch_pos:
+        if self._last_state.touch_pos and self._state.touch_pos:
             if not self.delta_position:
-                raise DeltaPositionInvalidError(self.last_state.touch_pos, self.state.touch_pos)
+                raise DeltaPositionInvalidError(self._last_state.touch_pos, self._state.touch_pos)
 
             return self.delta_position.map(lambda x: x / self.delta_time)
 
         # handle pointer rolling motion
-        if self._v0 and not self.state.touch_pos:
+        if self._v0 and not self._state.touch_pos:
             # use standard accelerated motion calculation
             v_magnitude = self._v0.len() - self.a_braking * self.delta_time
 
@@ -92,23 +92,23 @@ class PointerMotionSim:
 
     def stop_motion(self):
         # reset the state to empty to indicate all motion is stopped
-        self.last_state = copy.deepcopy(EMPTY_STATE)
-        self.state = copy.deepcopy(EMPTY_STATE)
+        self._last_state = copy.deepcopy(EMPTY_STATE)
+        self._state = copy.deepcopy(EMPTY_STATE)
         self._v0 = None
 
     @property
     def delta_position(self):
         # if theres no touch data and no velocity we're not moving
-        if (not self.state.touch_pos or not self.last_state.touch_pos) and not self.velocity:
+        if (not self._state.touch_pos or not self._last_state.touch_pos) and not self.velocity:
             return None
 
         # handle touch-driven motion
-        if self.state.touch_pos and self.last_state.touch_pos:
+        if self._state.touch_pos and self._last_state.touch_pos:
             return matrix(
                 [
                     [
-                        self.state.touch_pos[0] - self.last_state.touch_pos[0],
-                        self.state.touch_pos[1] - self.last_state.touch_pos[1],
+                        self._state.touch_pos[0] - self._last_state.touch_pos[0],
+                        self._state.touch_pos[1] - self._last_state.touch_pos[1],
                     ]
                 ]
             )
