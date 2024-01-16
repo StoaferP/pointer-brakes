@@ -52,6 +52,7 @@ test = "pytest {args:tests}"
 test-cov = "coverage run -m pytest {args:tests}"
 cov-report = ["- coverage combine", "coverage report"]
 cov = ["test-cov", "cov-report"]
+cov-xml = ["cov", "coverage xml"]
 update-deps = ["python scripts/update-deps.py"]
 
 [[tool.hatch.envs.all.matrix]]
