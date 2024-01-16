@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pointer-brakes"
-dynamic = ["version"]
+version = "0.0.1"
 description = 'A mouse pointer simulation driven by touch input. The pointer slowly brakes to a stop.'
 readme = "README.md"
 requires-python = ">=3.8"
@@ -28,9 +28,6 @@ dependencies = ["pymatrix"]
 Documentation = "https://github.com/ChrisArgyle/pointer-brakes#readme"
 Issues = "https://github.com/ChrisArgyle/pointer-brakes/issues"
 Source = "https://github.com/ChrisArgyle/pointer-brakes"
-
-[tool.hatch.version]
-path = "src/pointer_brakes/__about__.py"
 
 [tool.hatch.env]
 requires = ["hatch-pip-compile"]
@@ -72,7 +69,6 @@ mypy --disable-error-code=import-not-found --disable-error-code=import-untyped \
 source_pkgs = ["pointer_brakes", "tests"]
 branch = true
 parallel = true
-omit = ["src/pointer_brakes/__about__.py"]
 
 [tool.coverage.paths]
 pointer_brakes = ["src/pointer_brakes", "*/pointer-brakes/src/pointer_brakes"]
@@ -83,3 +79,11 @@ exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
 
 [tool.black]
 line-length = 120
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "pep440"
+version_provider = "pep621"
+update_changelog_on_bump = true
+major_version_zero = true
