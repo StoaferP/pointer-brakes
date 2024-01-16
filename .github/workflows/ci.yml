@@ -13,7 +13,6 @@ concurrency:
 env:
   PYTHONUNBUFFERED: "1"
   FORCE_COLOR: "1"
-  DEFAULT_PYTHON_VERSION: "3.10"
 
 jobs:
   check-deps:
@@ -22,10 +21,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Python ${{ env.DEFAULT_PYTHON_VERSION }}
+      - name: Set up Python ${{ vars.DEFAULT_PYTHON_VERSION }}
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+          python-version: ${{ vars.DEFAULT_PYTHON_VERSION }}
 
       - name: Install Hatch
         run: pip install --upgrade hatch
@@ -43,10 +42,10 @@ jobs:
       steps:
         - uses: actions/checkout@v3
   
-        - name: Set up Python ${{ env.DEFAULT_PYTHON_VERSION }}
+        - name: Set up Python ${{ vars.DEFAULT_PYTHON_VERSION }}
           uses: actions/setup-python@v4
           with:
-            python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+            python-version: ${{ vars.DEFAULT_PYTHON_VERSION }}
   
         - name: Install Hatch
           run: pip install --upgrade hatch
