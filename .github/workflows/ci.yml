@@ -11,15 +11,15 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  PYTHONUNBUFFERED: "1"
-  FORCE_COLOR: "1"
+  coverageDir: cover
+  ccTestReporterUrl: https://codeclimate.com/downloads/test-reporter/test-reporter-0.11.1-linux-amd64
 
 jobs:
   check-deps:
     name: Ensure dependency lockfiles are in sync
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Python ${{ vars.DEFAULT_PYTHON_VERSION }}
         uses: actions/setup-python@v4
@@ -35,51 +35,101 @@ jobs:
       - name: Check for changes to lockfiles
         run: >
           ! git status --short --untracked-files=all | grep -E 'requirements.*\.txt'
-  
-  static-analysis:
-      name: Do linting and type checking
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
-  
-        - name: Set up Python ${{ vars.DEFAULT_PYTHON_VERSION }}
-          uses: actions/setup-python@v4
-          with:
-            python-version: ${{ vars.DEFAULT_PYTHON_VERSION }}
-  
-        - name: Install Hatch
-          run: pip install --upgrade hatch
 
-        - name: Run linting
-          run: hatch fmt --check
-    
-        - name: Run type checking
-          run: hatch run types:check
+  static-analysis:
+    name: Do linting and type checking
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ vars.DEFAULT_PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ vars.DEFAULT_PYTHON_VERSION }}
+
+      - name: Install Hatch
+        run: pip install --upgrade hatch
+
+      - name: Run linting
+        run: hatch fmt --check
+
+      - name: Run type checking
+        run: hatch run types:check
+
+  start-coverage:
+    name: Initialize coverage reporting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Notify Code Climate
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        run: |
+          curl -L ${{ env.ccTestReporterUrl }} > cc-test-reporter
+          chmod +x cc-test-reporter
+
+          ./cc-test-reporter before-build
 
   test:
     name: Python ${{ matrix.python-version }} on ${{ startsWith(matrix.os, 'macos-') && 'macOS' || startsWith(matrix.os, 'windows-') && 'Windows' || 'Linux' }}
+    needs: [start-coverage]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - name: Install Hatch
-      run: pip install --upgrade hatch
+      - name: Install Hatch
+        run: pip install --upgrade hatch
 
-    - name: Run tests
-      run: hatch run cov-xml
+      - name: Run tests and coverage
+        env:
+          COVERAGE_FILE: ${{ env.coverageDir }}/.coverage.${{ runner.os }}-py${{ matrix.python-version }}
+          CONTEXT: ${{ runner.os }}-py${{ matrix.python-version }}
+        run: hatch run test-cov
 
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Store coverage files
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: ${{ env.coverageDir }}
+
+  finish-coverage:
+    name: Finish coverage reporting
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ vars.DEFAULT_PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ vars.DEFAULT_PYTHON_VERSION }}
+
+      - name: Install Hatch
+        run: pip install --upgrade hatch
+
+      - name: Get coverage files
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage
+
+      - name: Send reports to Code Climate
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        run: |
+          curl -L ${{ env.ccTestReporterUrl }} > cc-test-reporter
+          chmod +x cc-test-reporter
+
+          hatch run cov-xml
+          ./cc-test-reporter after-build
