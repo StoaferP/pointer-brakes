@@ -41,15 +41,12 @@ serve = "mkdocs serve"
 deploy = "mkdocs gh-deploy --force"
 
 [tool.hatch.envs.default]
-dependencies = ["coverage[toml]>=6.5", "pytest", "pytweening"]
-type = "pip-compile"
+dependencies = ["coverage[toml]>=6.5", "pytest", "pytweening", "commitizen"]
 
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
 test-cov = "coverage run -m pytest {args:tests}"
-cov-report = ["- coverage combine", "coverage report"]
-cov = ["test-cov", "cov-report"]
-cov-xml = ["cov", "coverage xml"]
+cov-xml = ["coverage combine", "coverage xml"]
 update-deps = ["python scripts/update-deps.py"]
 
 [[tool.hatch.envs.all.matrix]]
