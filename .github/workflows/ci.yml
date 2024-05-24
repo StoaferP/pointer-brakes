@@ -103,6 +103,25 @@ jobs:
         with:
           name: coverage
           path: ${{ env.coverageDir }}
+  
+  mutation-testing-report:
+    runs-on: ubuntu-latest
+    name: Mutation testing report
+    timeout-minutes: 15
+    permissions:
+      pull-requests: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: Century-ss/python-mutation-report@v2
+        with:
+          lock-file-path: "requirements.txt"
+          src-directory: "src/pointer_brakes"
+          test-directory: "tests"
+          where-to-run-test: "."
+          python-version: "3.11"
 
   finish-coverage:
     name: Finish coverage reporting
