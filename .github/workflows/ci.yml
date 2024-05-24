@@ -13,6 +13,8 @@ concurrency:
 env:
   coverageDir: cover
   ccTestReporterUrl: https://codeclimate.com/downloads/test-reporter/test-reporter-0.11.1-linux-amd64
+  srcDir: src/pointer_brakes
+  testDir: tests
 
 jobs:
   check-deps:
@@ -103,10 +105,29 @@ jobs:
         with:
           name: coverage
           path: ${{ env.coverageDir }}
-  
-  mutation-testing-report:
+
+  changes:
     runs-on: ubuntu-latest
+    # Required permissions
+    permissions:
+      pull-requests: read
+    outputs:
+      src: ${{ steps.filter.outputs.src }}
+      tests: ${{ steps.filter.outputs.tests }}
+    steps:
+      # For pull requests it's not necessary to checkout the code
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            src: ${{ env.srcDir }}/**
+            test: ${{ env.testDir }}/**
+
+  mutation-testing-report:
     name: Mutation testing report
+    needs: [changes]
+    if: needs.changes.outputs.src == 'true' || needs.changes.outputs.tests == 'true'
+    runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
       pull-requests: write
