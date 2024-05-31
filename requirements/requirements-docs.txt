@@ -3,7 +3,6 @@
 #
 # - mkdocs-material
 # - mkdocstrings[python]
-# - pymatrix
 #
 
 babel==2.15.0
@@ -79,8 +78,6 @@ platformdirs==4.2.2
     #   mkdocstrings
 pygments==2.18.0
     # via mkdocs-material
-pymatrix==3.0.1
-    # via hatch.envs.docs
 pymdown-extensions==10.8.1
     # via
     #   mkdocs-material

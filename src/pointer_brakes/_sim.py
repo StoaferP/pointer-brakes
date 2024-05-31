@@ -1,10 +1,8 @@
 from __future__ import annotations
 
-import copy
 from dataclasses import dataclass
 
-from pymatrix import Matrix, matrix
-
+from pointer_brakes._vec2d import Vec2D
 from pointer_brakes.exceptions import DeltaPositionInvalidError, DeltaTimeInvalidError, VelocityInvalidError
 
 
@@ -12,6 +10,9 @@ from pointer_brakes.exceptions import DeltaPositionInvalidError, DeltaTimeInvali
 class State:
     timestamp: float | None = None
     touch_pos: tuple[int, int] | None = None
+
+    def copy(self) -> State:
+        return State(self.timestamp, self.touch_pos)
 
 
 EMPTY_STATE = State()
@@ -37,7 +38,7 @@ class PointerMotionSim:
     _last_state: State
 
     # initial velocity (using during pointer rolling motion)
-    _v0: Matrix | None
+    _v0: Vec2D | None
 
     def __init__(self, a_braking: float) -> None:
         self.a_braking = a_braking
@@ -76,8 +77,8 @@ class PointerMotionSim:
             self._v0 = self.velocity
 
         # update simulation state
-        self._last_state = copy.deepcopy(self._state)
-        self._state = copy.deepcopy(EMPTY_STATE)
+        self._last_state = self._state.copy()
+        self._state = EMPTY_STATE.copy()
         self._state.timestamp = timestamp
 
         # update touch data if present
@@ -114,7 +115,7 @@ class PointerMotionSim:
         return self._state.timestamp - self._last_state.timestamp
 
     @property
-    def velocity(self) -> Matrix | None:
+    def velocity(self) -> Vec2D | None:
         """The current pointer velocity.
 
         This property handles various scenarios to determine the current velocity of
@@ -124,7 +125,7 @@ class PointerMotionSim:
         velocity with magnitude of acceleration due to braking.
 
         Returns:
-            The calculated velocity as a 2x1 Matrix instance or None if
+            The calculated velocity as a 2D Vector instance or None if
                 motion is stopped.
 
         Raises:
@@ -154,7 +155,7 @@ class PointerMotionSim:
             if not self.delta_position:
                 raise DeltaPositionInvalidError(self._last_state.touch_pos, self._state.touch_pos)
 
-            return self.delta_position.map(lambda x: x / self.delta_time)
+            return self.delta_position / self.delta_time
 
         # handle pointer rolling motion
         if self._v0 and not self._state.touch_pos:
@@ -166,7 +167,7 @@ class PointerMotionSim:
                 self.stop_motion()
                 return None
 
-            return self._v0.dir().map(lambda x: x * v_magnitude)
+            return self._v0.dir() * v_magnitude
 
         raise VelocityInvalidError
 
@@ -186,12 +187,12 @@ class PointerMotionSim:
             ```
         """
         # reset the state to empty to indicate all motion is stopped
-        self._last_state = copy.deepcopy(EMPTY_STATE)
-        self._state = copy.deepcopy(EMPTY_STATE)
+        self._last_state = EMPTY_STATE.copy()
+        self._state = EMPTY_STATE.copy()
         self._v0 = None
 
     @property
-    def delta_position(self) -> Matrix | None:
+    def delta_position(self) -> Vec2D | None:
         """The change in position between the last two state ticks.
 
         For touch-driven motion, it simply calculates the change in position between
@@ -200,7 +201,7 @@ class PointerMotionSim:
         opposite to velocity with magnitude of acceleration due to braking.
 
         Returns:
-            The 2x1 Matrix representing the change in position from last
+            The 2D vector representing the change in position from last
                 state tick to the current state tick.
 
         Raises:
@@ -221,13 +222,9 @@ class PointerMotionSim:
 
         # handle touch-driven motion
         if self._state.touch_pos and self._last_state.touch_pos:
-            return matrix(
-                [
-                    [
-                        self._state.touch_pos[0] - self._last_state.touch_pos[0],
-                        self._state.touch_pos[1] - self._last_state.touch_pos[1],
-                    ]
-                ]
+            return Vec2D(
+                self._state.touch_pos[0] - self._last_state.touch_pos[0],
+                self._state.touch_pos[1] - self._last_state.touch_pos[1],
             )
 
         # handle pointer rolling motion; use standard accelerated motion calculation
@@ -235,4 +232,4 @@ class PointerMotionSim:
             raise DeltaPositionInvalidError
 
         delta_pos_mag = self._v0.len() * self.delta_time + self.a_braking / 2 * self.delta_time**2
-        return self._v0.dir().map(lambda x: x * delta_pos_mag)
+        return self._v0.dir() * delta_pos_mag

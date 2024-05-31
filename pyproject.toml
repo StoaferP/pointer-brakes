@@ -22,7 +22,6 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = ["pymatrix"]
 
 [project.urls]
 Documentation = "https://github.com/ChrisArgyle/pointer-brakes#readme"
