@@ -1,3 +1,18 @@
+## 0.2.0 (2024-05-31)
+
+### Feat
+
+- add mutation testing to CI pipeline
+- replace codecov with code climate
+
+### Fix
+
+- filter files for mutation testing
+
+### Refactor
+
+- remove dependency on pymatrix (and stdlib copy)
+
 ## 0.1.0 (2024-01-16)
 
 ### Feat
