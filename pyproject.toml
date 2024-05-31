@@ -41,7 +41,14 @@ serve = "mkdocs serve"
 deploy = "mkdocs gh-deploy --force"
 
 [tool.hatch.envs.default]
-dependencies = ["coverage[toml]>=6.5", "pytest", "pytweening", "commitizen"]
+dependencies = [
+  "coverage[toml]>=6.5",
+  "pytest",
+  "pytweening",
+  "commitizen",
+  "mutmut",
+]
+type = "pip-compile"
 
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
