@@ -105,9 +105,10 @@ def test_idle_then_touch_motion(swipe, idle_before):
     sim = PointerMotionSim(31.337)
 
     touch_data = idle_before() + swipe()
+    start_t = time.monotonic_ns()
     for i in range(len(touch_data)):
         # do tick
-        sim.tick(time.monotonic_ns(), touch_data[i])
+        sim.tick(start_t + i * int(0.1 * 1e9), touch_data[i])
 
         # assert delta_pos is as expected
         if i == 0 or not touch_data[i] or not touch_data[i - 1]:
