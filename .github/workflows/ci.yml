@@ -136,6 +136,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Hatch
+        run: pip install --upgrade hatch
+
+      - name: Prepare environment
+        run: |
+          hatch build
+          pip install dist/*.whl
+
       - uses: Century-ss/python-mutation-report@v2
         with:
           lock-file-path: "requirements.txt"
