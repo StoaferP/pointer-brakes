@@ -1,15 +1,16 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-
 from pointer_brakes._vec2d import Vec2D
 from pointer_brakes.exceptions import DeltaPositionInvalidError, DeltaTimeInvalidError, VelocityInvalidError
 
 
-@dataclass(repr=True)
 class State:
-    timestamp: float | None = None
-    touch_pos: tuple[int, int] | None = None
+    timestamp: float | None
+    touch_pos: tuple[int, int] | None
+
+    def __init__(self, timestamp=None, touch_pos=None):
+        self.timestamp = timestamp
+        self.touch_pos = touch_pos
 
     def copy(self) -> State:
         return State(self.timestamp, self.touch_pos)
@@ -75,6 +76,10 @@ class PointerMotionSim:
         # if touch is idle then update initial velocity
         if not touch_pos:
             self._v0 = self.velocity
+
+        # reject zero-time ticks
+        if self._state.timestamp == timestamp:
+            return
 
         # update simulation state
         self._last_state = self._state.copy()
