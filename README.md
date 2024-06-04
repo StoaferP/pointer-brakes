@@ -26,8 +26,8 @@ pip install pointer-brakes
 ```python
 a_brakes = 1
 sim_instance = PointerMotionSim(a_brakes)
-sim_instance.tick(time.monotonic(), (-52, -5))
-sim_instance.tick(time.monotonic(), (21, -92))
+sim_instance.tick(time.monotonic_ns(), (-52, -5))
+sim_instance.tick(time.monotonic_ns(), (21, -92))
 change_in_position = sim_instance.delta_position
 ```
 

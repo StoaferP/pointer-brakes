@@ -5,7 +5,7 @@ from pointer_brakes.exceptions import DeltaPositionInvalidError, DeltaTimeInvali
 
 
 class State:
-    timestamp: float | None
+    timestamp: int | None
     touch_pos: tuple[int, int] | None
 
     def __init__(self, timestamp=None, touch_pos=None):
@@ -47,7 +47,7 @@ class PointerMotionSim:
         self._last_state = State()
         self._v0 = None
 
-    def tick(self, timestamp: float, touch_pos: tuple[int, int] | None = None) -> None:
+    def tick(self, timestamp: int, touch_pos: tuple[int, int] | None = None) -> None:
         """Update the state of the PointerMotionSim
 
         This method updates the simulation state of the PointerMotionSim instance. When
@@ -56,7 +56,7 @@ class PointerMotionSim:
         pointer comes to rest due to braking.
 
         Args:
-            timestamp (float): The timestamp at which the update occurs.
+            timestamp (int): The timestamp at which the update occurs.
             touch_pos (tuple[int, int] | None): The current touch position as a tuple
                 (x, y), or None if touch is idle.
 
@@ -64,13 +64,16 @@ class PointerMotionSim:
         ```python
         a_brakes = 1
         sim_instance = PointerMotionSim(a_brakes)
-        current_timestamp = time.monotonic()
+        current_timestamp = time.monotonic_ns()
         current_touch_pos = (50, 50)
         sim_instance.tick(current_timestamp, current_touch_pos)
         ```
         """
         # if touch is idle and motion is stopped then do nothing
         if not touch_pos and not self.velocity:
+            # ensure state is cleared to reflect idleness
+            if self._state.timestamp:
+                self.stop_motion()
             return
 
         # if touch is idle then update initial velocity
@@ -90,7 +93,7 @@ class PointerMotionSim:
         self._state.touch_pos = touch_pos if touch_pos else None
 
     @property
-    def delta_time(self) -> float:
+    def delta_time(self) -> int:
         """The time difference between the current state and the last state.
 
         This property calculates the delta time, representing the time elapsed between
@@ -109,8 +112,8 @@ class PointerMotionSim:
             ```python
             a_brakes = 1
             sim_instance = PointerMotionSim(a_brakes)
-            sim_instance.tick(time.monotonic(), (50, 50))
-            sim_instance.tick(time.monotonic(), (60, -30))
+            sim_instance.tick(time.monotonic_ns(), (50, 50))
+            sim_instance.tick(time.monotonic_ns(), (60, -30))
             time_difference = sim_instance.delta_time
             ```
         """
@@ -142,8 +145,8 @@ class PointerMotionSim:
             ```python
             a_brakes = 1
             sim_instance = PointerMotionSim(a_brakes)
-            sim_instance.tick(time.monotonic(), (30, 12))
-            sim_instance.tick(time.monotonic(), (104, 23))
+            sim_instance.tick(time.monotonic_ns(), (30, 12))
+            sim_instance.tick(time.monotonic_ns(), (104, 23))
             current_velocity = sim_instance.velocity
             ```
         """
@@ -186,8 +189,8 @@ class PointerMotionSim:
             ```python
             a_brakes = 1
             sim_instance = PointerMotionSim(a_brakes)
-            sim_instance.tick(time.monotonic(), (15, -75))
-            sim_instance.tick(time.monotonic(), (-83, 11))
+            sim_instance.tick(time.monotonic_ns(), (15, -75))
+            sim_instance.tick(time.monotonic_ns(), (-83, 11))
             sim_instance.stop_motion()
             ```
         """
@@ -216,8 +219,8 @@ class PointerMotionSim:
             ```python
             a_brakes = 1
             sim_instance = PointerMotionSim(a_brakes)
-            sim_instance.tick(time.monotonic(), (-52, -5))
-            sim_instance.tick(time.monotonic(), (21, -92))
+            sim_instance.tick(time.monotonic_ns(), (-52, -5))
+            sim_instance.tick(time.monotonic_ns(), (21, -92))
             change_in_position = sim_instance.delta_position
             ```
         """
@@ -236,5 +239,5 @@ class PointerMotionSim:
         if not self._v0:
             raise DeltaPositionInvalidError
 
-        delta_pos_mag = self._v0.len() * self.delta_time + self.a_braking / 2 * self.delta_time**2
+        delta_pos_mag = self._v0.len() * self.delta_time - self.a_braking / 2 * self.delta_time**2
         return self._v0.dir() * delta_pos_mag
