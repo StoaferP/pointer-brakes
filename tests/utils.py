@@ -10,21 +10,21 @@ if TYPE_CHECKING:
     from pointer_brakes import PointerMotionSim
 
 
-def prep_sim_for_rolling(sim: PointerMotionSim, p1: tuple[int, int], p2: tuple[int, int], v12: float):
+def prep_sim_for_rolling(sim: PointerMotionSim, p1: tuple[int, int], p2: tuple[int, int], v12: float) -> int:
     delta_time = get_delta_time(p1, p2, v12)
 
     # run sim with contrived data
-    t0 = time.monotonic()
+    t0 = time.monotonic_ns()
     sim.tick(t0, p1)
     sim.tick(t0 + delta_time, p2)
 
     return t0 + delta_time
 
 
-def get_delta_time(p1: tuple[int, int], p2: tuple[int, int], v12: float):
+def get_delta_time(p1: tuple[int, int], p2: tuple[int, int], v12: float) -> int:
     # v = distance / delta_time
     # delta_time = distance / v
-    return hypot(p2[0] - p1[0], p2[1] - p1[1]) / v12
+    return int(hypot(p2[0] - p1[0], p2[1] - p1[1]) / v12)
 
 
 def distance_between_points(p1: tuple[int, int], p2: tuple[int, int]):

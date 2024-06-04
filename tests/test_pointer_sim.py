@@ -21,27 +21,28 @@ from .utils import (
 # test touch motion that interrupts rolling motion
 def test_touch_interrupts_rolling():
     # prep sim for pointer rolling
-    a_brake = 5
+    a_brake = 1
     sim = PointerMotionSim(a_brake)
-    fake_t = prep_sim_for_rolling(sim, (-32, 15), (-28, 23), 100)
+    fake_t = prep_sim_for_rolling(sim, (-32, 15), (50, 23), 20)
 
     # run sim with touch idle to start pointer rolling motion
     fake_t += 1
     sim.tick(fake_t)
+    assert sim.velocity
 
     # interrupt with touch data
     p3 = (-4, 84)
-    p4 = (-20, 90)
-    v34 = 7
+    p4 = (-120, 90)
+    v34 = 2
     t34 = get_delta_time(p3, p4, v34)
-    fake_t += 0.2
+    fake_t += int(0.2 * 1e9)
     sim.tick(fake_t, p3)
     fake_t += t34
     sim.tick(fake_t, p4)
 
     # assert velocity is expected
     assert sim.velocity
-    assert isclose(sim.velocity.len(), v34)
+    assert isclose(sim.velocity.len(), v34, rel_tol=0.1)
 
     # assert delta position is expected
     assert sim.delta_position
@@ -57,8 +58,8 @@ def test_rolling_motion_stops_eventually():
     fake_t = prep_sim_for_rolling(sim, (-120, -84), (-23, -39), v_prep)
 
     # run sim with touch idle until we expect pointer motion to stop
-    delta_time = v_prep / a_brake  # found by solving v=v0-a*t when v=0
-    sim.tick(fake_t + delta_time + 0.1)  # fudge 100ms because floating point accuracy
+    delta_time = int(v_prep / a_brake)  # found by solving v=v0-a*t when v=0
+    sim.tick(fake_t + delta_time + int(0.1 * 1e9))  # fudge 100ms because floating point accuracy
 
     # assert motion is stopped
     assert sim.velocity is None
@@ -69,8 +70,8 @@ def test_rolling_motion_correct_calculations():
     # prep sim for rolling
     a_brake = 7
     sim = PointerMotionSim(a_brake)
-    v_prep = 48
-    fake_t = prep_sim_for_rolling(sim, (12, 3), (-9, 25), v_prep)
+    v_prep = 28
+    fake_t = prep_sim_for_rolling(sim, (120, 3), (-109, 25), v_prep)
 
     # run sim with touch idle to so some rolling
     delta_time = 2
@@ -78,10 +79,9 @@ def test_rolling_motion_correct_calculations():
 
     # assert velocity and delta_position are calculated as we expect
     assert sim.velocity
-    assert isclose(sim.velocity.len(), v_prep - a_brake * delta_time)
+    assert isclose(sim.velocity.len(), v_prep - a_brake * delta_time, rel_tol=0.1)
     assert sim.delta_position
-    # lets tolerate 1e-06 cuz floating point accuracy
-    assert isclose(sim.velocity.len(), v_prep * delta_time - a_brake / 2 * delta_time**2, rel_tol=6)
+    assert isclose(sim.delta_position.len(), v_prep * delta_time - 1 / 2 * a_brake * delta_time**2, rel_tol=0.1)
 
 
 # when motion is stopped velocity and delta_position are None
@@ -105,9 +105,10 @@ def test_idle_then_touch_motion(swipe, idle_before):
     sim = PointerMotionSim(31.337)
 
     touch_data = idle_before() + swipe()
+    start_t = time.monotonic_ns()
     for i in range(len(touch_data)):
         # do tick
-        sim.tick(time.monotonic(), touch_data[i])
+        sim.tick(start_t + i * int(0.1 * 1e9), touch_data[i])
 
         # assert delta_pos is as expected
         if i == 0 or not touch_data[i] or not touch_data[i - 1]:

@@ -23,11 +23,13 @@ pip install pointer-brakes
 
 ## Usage
 
+__**NOTE**__ Windows users should prefer `time.time_ns()` as the resolution is very poor on `time.monotonic_ns()`
+
 ```python
 a_brakes = 1
 sim_instance = PointerMotionSim(a_brakes)
-sim_instance.tick(time.monotonic(), (-52, -5))
-sim_instance.tick(time.monotonic(), (21, -92))
+sim_instance.tick(time.monotonic_ns(), (-52, -5)) 
+sim_instance.tick(time.monotonic_ns(), (21, -92))
 change_in_position = sim_instance.delta_position
 ```
 
