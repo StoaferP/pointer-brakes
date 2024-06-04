@@ -103,7 +103,7 @@ jobs:
       - name: Store coverage files
         uses: actions/upload-artifact@v4
         with:
-          name: coverage
+          name: coverage.${{ runner.os }}-py${{ matrix.python-version }}
           path: ${{ env.coverageDir }}
 
   changes:
@@ -159,9 +159,10 @@ jobs:
         run: pip install --upgrade hatch
 
       - name: Get coverage files
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          name: coverage
+          pattern: coverage.*
+          merge-multiple: true
 
       - name: Send reports to Code Climate
         env:
