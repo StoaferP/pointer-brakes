@@ -20,7 +20,7 @@ EMPTY_STATE = State()
 
 
 class PointerMotionSim:
-    """A simulation of pointer motion, including touch-driven and free rolling motions.
+    """A simulation of pointer motion, including touch-driven and free rolling motion.
 
     Attributes:
         a_braking (float): The magnitude of acceleration caused by pointer brakes.

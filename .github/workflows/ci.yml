@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python ${{ vars.DEFAULT_PYTHON_VERSION }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ vars.DEFAULT_PYTHON_VERSION }}
 
@@ -45,7 +45,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python ${{ vars.DEFAULT_PYTHON_VERSION }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ vars.DEFAULT_PYTHON_VERSION }}
 
@@ -87,7 +87,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -101,9 +101,9 @@ jobs:
         run: hatch run test-cov
 
       - name: Store coverage files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: coverage
+          name: coverage.${{ runner.os }}-py${{ matrix.python-version }}
           path: ${{ env.coverageDir }}
 
   changes:
@@ -136,13 +136,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Hatch
+        run: pip install --upgrade hatch
+
+      - name: Prepare environment
+        run: |
+          hatch build
+          pip install dist/*.whl
+
       - uses: Century-ss/python-mutation-report@v2
         with:
           lock-file-path: "requirements.txt"
           src-directory: "src/pointer_brakes"
           test-directory: "tests"
-          where-to-run-test: "."
-          python-version: "3.11"
+          python-version: ${{ vars.DEFAULT_PYTHON_VERSION }}
 
   finish-coverage:
     name: Finish coverage reporting
@@ -152,7 +159,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python ${{ vars.DEFAULT_PYTHON_VERSION }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ vars.DEFAULT_PYTHON_VERSION }}
 
@@ -160,9 +167,10 @@ jobs:
         run: pip install --upgrade hatch
 
       - name: Get coverage files
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          name: coverage
+          pattern: coverage.*
+          merge-multiple: true
 
       - name: Send reports to Code Climate
         env:
