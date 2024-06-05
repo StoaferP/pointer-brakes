@@ -1,3 +1,14 @@
+## 0.2.1 (2024-06-05)
+
+### Fix
+
+- prepare environment for mutation testing
+- accommodate new (upload|download)@v5 immutable artifact behavior
+- allow CI pipeline to find test files and some version bumping chores
+- compensate for and document poor resolution of time.monotonic_ns() on Windows
+- tests and docs use a more accurate timer function
+- remove dependency on dataclass plus bonus fixes
+
 ## 0.2.0 (2024-05-31)
 
 ### Feat
