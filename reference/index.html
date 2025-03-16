@@ -1,0 +1,1464 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../about/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.24">
+    
+    
+      
+        <title>Reference - Pointer Breaks</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Pointer Breaks" class="md-header__button md-logo" aria-label="Pointer Breaks" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Pointer Breaks
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Pointer Breaks" class="md-nav__button md-logo" aria-label="Pointer Breaks" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Pointer Breaks
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pointer_brakes.PointerMotionSim" class="md-nav__link">
+    <span class="md-ellipsis">
+      PointerMotionSim
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PointerMotionSim">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pointer_brakes.PointerMotionSim.delta_position" class="md-nav__link">
+    <span class="md-ellipsis">
+      delta_position
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pointer_brakes.PointerMotionSim.delta_time" class="md-nav__link">
+    <span class="md-ellipsis">
+      delta_time
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pointer_brakes.PointerMotionSim.velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      velocity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pointer_brakes.PointerMotionSim.stop_motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      stop_motion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pointer_brakes.PointerMotionSim.tick" class="md-nav__link">
+    <span class="md-ellipsis">
+      tick
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="api-reference">API reference</h1>
+<blockquote>
+<p><strong><em>NOTE</em></strong>  The docstrings were generated by OpenAI ChatGPT then edited by me</p>
+</blockquote>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="pointer_brakes.PointerMotionSim" class="doc doc-heading">
+            <code>pointer_brakes.PointerMotionSim</code>
+
+
+</h2>
+
+
+    <div class="doc doc-contents first">
+
+
+      <p>A simulation of pointer motion, including touch-driven and free rolling motion.</p>
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code><span title="pointer_brakes.PointerMotionSim.a_braking">a_braking</span></code></td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The magnitude of acceleration caused by pointer brakes.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <pre><code class="language-python">sim_instance = PointerMotionSim(2.0)
+</code></pre>
+</details>
+              <details class="quote">
+                <summary>Source code in <code>src/pointer_brakes/_sim.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">PointerMotionSim</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A simulation of pointer motion, including touch-driven and free rolling motion.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        a_braking (float): The magnitude of acceleration caused by pointer brakes.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        sim_instance = PointerMotionSim(2.0)</span>
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># magnitude of acceleration due to braking (using during pointer rolling motion)</span>
+    <span class="n">a_braking</span><span class="p">:</span> <span class="nb">float</span>
+
+    <span class="c1"># simulation state</span>
+    <span class="n">_state</span><span class="p">:</span> <span class="n">State</span>
+    <span class="n">_last_state</span><span class="p">:</span> <span class="n">State</span>
+
+    <span class="c1"># initial velocity (using during pointer rolling motion)</span>
+    <span class="n">_v0</span><span class="p">:</span> <span class="n">Vec2D</span> <span class="o">|</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_braking</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a_braking</span> <span class="o">=</span> <span class="n">a_braking</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">State</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span> <span class="o">=</span> <span class="n">State</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_v0</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">tick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">touch_pos</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the state of the PointerMotionSim</span>
+
+<span class="sd">        This method updates the simulation state of the PointerMotionSim instance. When</span>
+<span class="sd">        touch position is provided the pointer will be moved.  When the touch position,</span>
+<span class="sd">        inevitably, goes idle then the simulation will continue moving until the</span>
+<span class="sd">        pointer comes to rest due to braking.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timestamp (int): The timestamp at which the update occurs.</span>
+<span class="sd">            touch_pos (tuple[int, int] | None): The current touch position as a tuple</span>
+<span class="sd">                (x, y), or None if touch is idle.</span>
+
+<span class="sd">        Example usage:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        a_brakes = 1</span>
+<span class="sd">        sim_instance = PointerMotionSim(a_brakes)</span>
+<span class="sd">        current_timestamp = time.monotonic_ns()</span>
+<span class="sd">        current_touch_pos = (50, 50)</span>
+<span class="sd">        sim_instance.tick(current_timestamp, current_touch_pos)</span>
+<span class="sd">        ```</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># if touch is idle and motion is stopped then do nothing</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">touch_pos</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">:</span>
+            <span class="c1"># ensure state is cleared to reflect idleness</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">timestamp</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stop_motion</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="c1"># if touch is idle then update initial velocity</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">touch_pos</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_v0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span>
+
+        <span class="c1"># reject zero-time ticks</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">==</span> <span class="n">timestamp</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># update simulation state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">EMPTY_STATE</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">timestamp</span>
+
+        <span class="c1"># update touch data if present</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">touch_pos</span> <span class="o">=</span> <span class="n">touch_pos</span> <span class="k">if</span> <span class="n">touch_pos</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">delta_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The time difference between the current state and the last state.</span>
+
+<span class="sd">        This property calculates the delta time, representing the time elapsed between</span>
+<span class="sd">        the current state and the last state in the simulation. It ensures that both</span>
+<span class="sd">        timestamps are available; otherwise, it raises a DeltaTimeInvalidError.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The time difference (delta time) between the current and last state</span>
+<span class="sd">                timestamps.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            DeltaTimeInvalidError: If either the current state timestamp or the last state</span>
+<span class="sd">                timestamp is not set.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            ```python</span>
+<span class="sd">            a_brakes = 1</span>
+<span class="sd">            sim_instance = PointerMotionSim(a_brakes)</span>
+<span class="sd">            sim_instance.tick(time.monotonic_ns(), (50, 50))</span>
+<span class="sd">            sim_instance.tick(time.monotonic_ns(), (60, -30))</span>
+<span class="sd">            time_difference = sim_instance.delta_time</span>
+<span class="sd">            ```</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">timestamp</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span><span class="o">.</span><span class="n">timestamp</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DeltaTimeInvalidError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span><span class="o">.</span><span class="n">timestamp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span><span class="o">.</span><span class="n">timestamp</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vec2D</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The current pointer velocity.</span>
+
+<span class="sd">        This property handles various scenarios to determine the current velocity of</span>
+<span class="sd">        the simulation. If there&#39;s touch-driven motion, it calculates velocity based on</span>
+<span class="sd">        the change in position over time. For pointer rolling motion, it uses standard</span>
+<span class="sd">        accelerated motion calculations where acceleration direction is opposite to</span>
+<span class="sd">        velocity with magnitude of acceleration due to braking.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The calculated velocity as a 2D Vector instance or None if</span>
+<span class="sd">                motion is stopped.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            DeltaPositionInvalidError: The change in is not valid during touch-driven</span>
+<span class="sd">                motion.</span>
+<span class="sd">            VelocityInvalidError: The p method encounters an unexpected condition.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            ```python</span>
+<span class="sd">            a_brakes = 1</span>
+<span class="sd">            sim_instance = PointerMotionSim(a_brakes)</span>
+<span class="sd">            sim_instance.tick(time.monotonic_ns(), (30, 12))</span>
+<span class="sd">            sim_instance.tick(time.monotonic_ns(), (104, 23))</span>
+<span class="sd">            current_velocity = sim_instance.velocity</span>
+<span class="sd">            ```</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># if we have blank timestamps then motion is stopped</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span><span class="o">.</span><span class="n">timestamp</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">timestamp</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># handle transition from idle to touch motion</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">touch_pos</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span><span class="o">.</span><span class="n">touch_pos</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># handle touch-driven motion</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span><span class="o">.</span><span class="n">touch_pos</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">touch_pos</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_position</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">DeltaPositionInvalidError</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span><span class="o">.</span><span class="n">touch_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">touch_pos</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_position</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_time</span>
+
+        <span class="c1"># handle pointer rolling motion</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_v0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">touch_pos</span><span class="p">:</span>
+            <span class="c1"># use standard accelerated motion calculation</span>
+            <span class="n">v_magnitude</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_v0</span><span class="o">.</span><span class="n">len</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">a_braking</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_time</span>
+
+            <span class="c1"># if braking would reduce the velocity to 0 or less then stop motion</span>
+            <span class="k">if</span> <span class="n">v_magnitude</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stop_motion</span><span class="p">()</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_v0</span><span class="o">.</span><span class="n">dir</span><span class="p">()</span> <span class="o">*</span> <span class="n">v_magnitude</span>
+
+        <span class="k">raise</span> <span class="n">VelocityInvalidError</span>
+
+    <span class="k">def</span> <span class="nf">stop_motion</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Stop all motion in the simulation</span>
+
+<span class="sd">        This method resets the simulation state and initial velocity to indicate that</span>
+<span class="sd">        all motion has stopped.</span>
+
+<span class="sd">        Example usage:</span>
+<span class="sd">            ```python</span>
+<span class="sd">            a_brakes = 1</span>
+<span class="sd">            sim_instance = PointerMotionSim(a_brakes)</span>
+<span class="sd">            sim_instance.tick(time.monotonic_ns(), (15, -75))</span>
+<span class="sd">            sim_instance.tick(time.monotonic_ns(), (-83, 11))</span>
+<span class="sd">            sim_instance.stop_motion()</span>
+<span class="sd">            ```</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># reset the state to empty to indicate all motion is stopped</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span> <span class="o">=</span> <span class="n">EMPTY_STATE</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">EMPTY_STATE</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_v0</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">delta_position</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vec2D</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The change in position between the last two state ticks.</span>
+
+<span class="sd">        For touch-driven motion, it simply calculates the change in position between</span>
+<span class="sd">        the current and last touch positions. For pointer rolling motion, it uses</span>
+<span class="sd">        standard accelerated motion calculations where acceleration direction is</span>
+<span class="sd">        opposite to velocity with magnitude of acceleration due to braking.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The 2D vector representing the change in position from last</span>
+<span class="sd">                state tick to the current state tick.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            DeltaPositionInvalidError: If the delta position cannot be determined.</span>
+
+<span class="sd">        Example:</span>
+<span class="sd">            ```python</span>
+<span class="sd">            a_brakes = 1</span>
+<span class="sd">            sim_instance = PointerMotionSim(a_brakes)</span>
+<span class="sd">            sim_instance.tick(time.monotonic_ns(), (-52, -5))</span>
+<span class="sd">            sim_instance.tick(time.monotonic_ns(), (21, -92))</span>
+<span class="sd">            change_in_position = sim_instance.delta_position</span>
+<span class="sd">            ```</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># if theres no touch data and no velocity we&#39;re not moving</span>
+        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">touch_pos</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span><span class="o">.</span><span class="n">touch_pos</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># handle touch-driven motion</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">touch_pos</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span><span class="o">.</span><span class="n">touch_pos</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Vec2D</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">touch_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span><span class="o">.</span><span class="n">touch_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">touch_pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span><span class="o">.</span><span class="n">touch_pos</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="p">)</span>
+
+        <span class="c1"># handle pointer rolling motion; use standard accelerated motion calculation</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_v0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DeltaPositionInvalidError</span>
+
+        <span class="n">delta_pos_mag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_v0</span><span class="o">.</span><span class="n">len</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">a_braking</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">delta_time</span><span class="o">**</span><span class="mi">2</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_v0</span><span class="o">.</span><span class="n">dir</span><span class="p">()</span> <span class="o">*</span> <span class="n">delta_pos_mag</span>
+</code></pre></div></td></tr></table></div>
+              </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="pointer_brakes.PointerMotionSim.delta_position" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">delta_position</span><span class="p">:</span> <span class="n">Vec2D</span> <span class="o">|</span> <span class="kc">None</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>The change in position between the last two state ticks.</p>
+<p>For touch-driven motion, it simply calculates the change in position between
+the current and last touch positions. For pointer rolling motion, it uses
+standard accelerated motion calculations where acceleration direction is
+opposite to velocity with magnitude of acceleration due to braking.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pointer_brakes._vec2d.Vec2D">Vec2D</span> | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The 2D vector representing the change in position from last
+state tick to the current state tick.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pointer_brakes.exceptions.DeltaPositionInvalidError">DeltaPositionInvalidError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If the delta position cannot be determined.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <pre><code class="language-python">a_brakes = 1
+sim_instance = PointerMotionSim(a_brakes)
+sim_instance.tick(time.monotonic_ns(), (-52, -5))
+sim_instance.tick(time.monotonic_ns(), (21, -92))
+change_in_position = sim_instance.delta_position
+</code></pre>
+</details>    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="pointer_brakes.PointerMotionSim.delta_time" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">delta_time</span><span class="p">:</span> <span class="nb">int</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>The time difference between the current state and the last state.</p>
+<p>This property calculates the delta time, representing the time elapsed between
+the current state and the last state in the simulation. It ensures that both
+timestamps are available; otherwise, it raises a DeltaTimeInvalidError.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code>int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The time difference (delta time) between the current and last state
+timestamps.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pointer_brakes.exceptions.DeltaTimeInvalidError">DeltaTimeInvalidError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If either the current state timestamp or the last state
+timestamp is not set.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <pre><code class="language-python">a_brakes = 1
+sim_instance = PointerMotionSim(a_brakes)
+sim_instance.tick(time.monotonic_ns(), (50, 50))
+sim_instance.tick(time.monotonic_ns(), (60, -30))
+time_difference = sim_instance.delta_time
+</code></pre>
+</details>    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="pointer_brakes.PointerMotionSim.velocity" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">velocity</span><span class="p">:</span> <span class="n">Vec2D</span> <span class="o">|</span> <span class="kc">None</span></code>
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>The current pointer velocity.</p>
+<p>This property handles various scenarios to determine the current velocity of
+the simulation. If there's touch-driven motion, it calculates velocity based on
+the change in position over time. For pointer rolling motion, it uses standard
+accelerated motion calculations where acceleration direction is opposite to
+velocity with magnitude of acceleration due to braking.</p>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pointer_brakes._vec2d.Vec2D">Vec2D</span> | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The calculated velocity as a 2D Vector instance or None if
+motion is stopped.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pointer_brakes.exceptions.DeltaPositionInvalidError">DeltaPositionInvalidError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The change in is not valid during touch-driven
+motion.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="pointer_brakes.exceptions.VelocityInvalidError">VelocityInvalidError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The p method encounters an unexpected condition.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <pre><code class="language-python">a_brakes = 1
+sim_instance = PointerMotionSim(a_brakes)
+sim_instance.tick(time.monotonic_ns(), (30, 12))
+sim_instance.tick(time.monotonic_ns(), (104, 23))
+current_velocity = sim_instance.velocity
+</code></pre>
+</details>    </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pointer_brakes.PointerMotionSim.stop_motion" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">stop_motion</span><span class="p">()</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Stop all motion in the simulation</p>
+<p>This method resets the simulation state and initial velocity to indicate that
+all motion has stopped.</p>
+
+
+<details class="example-usage" open>
+  <summary>Example usage</summary>
+  <pre><code class="language-python">a_brakes = 1
+sim_instance = PointerMotionSim(a_brakes)
+sim_instance.tick(time.monotonic_ns(), (15, -75))
+sim_instance.tick(time.monotonic_ns(), (-83, 11))
+sim_instance.stop_motion()
+</code></pre>
+</details>
+            <details class="quote">
+              <summary>Source code in <code>src/pointer_brakes/_sim.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span>
+<span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">stop_motion</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stop all motion in the simulation</span>
+
+<span class="sd">    This method resets the simulation state and initial velocity to indicate that</span>
+<span class="sd">    all motion has stopped.</span>
+
+<span class="sd">    Example usage:</span>
+<span class="sd">        ```python</span>
+<span class="sd">        a_brakes = 1</span>
+<span class="sd">        sim_instance = PointerMotionSim(a_brakes)</span>
+<span class="sd">        sim_instance.tick(time.monotonic_ns(), (15, -75))</span>
+<span class="sd">        sim_instance.tick(time.monotonic_ns(), (-83, 11))</span>
+<span class="sd">        sim_instance.stop_motion()</span>
+<span class="sd">        ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># reset the state to empty to indicate all motion is stopped</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span> <span class="o">=</span> <span class="n">EMPTY_STATE</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">EMPTY_STATE</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_v0</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="pointer_brakes.PointerMotionSim.tick" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">tick</span><span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">touch_pos</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+</h3>
+
+
+    <div class="doc doc-contents ">
+
+      <p>Update the state of the PointerMotionSim</p>
+<p>This method updates the simulation state of the PointerMotionSim instance. When
+touch position is provided the pointer will be moved.  When the touch position,
+inevitably, goes idle then the simulation will continue moving until the
+pointer comes to rest due to braking.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>timestamp</code></td>
+            <td>
+                  <code>int</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The timestamp at which the update occurs.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>touch_pos</code></td>
+            <td>
+                  <code>tuple[int, int] | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The current touch position as a tuple
+(x, y), or None if touch is idle.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+      <p>Example usage:</p>
+<pre><code class="language-python">a_brakes = 1
+sim_instance = PointerMotionSim(a_brakes)
+current_timestamp = time.monotonic_ns()
+current_touch_pos = (50, 50)
+sim_instance.tick(current_timestamp, current_touch_pos)
+</code></pre>
+
+            <details class="quote">
+              <summary>Source code in <code>src/pointer_brakes/_sim.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">tick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">touch_pos</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update the state of the PointerMotionSim</span>
+
+<span class="sd">    This method updates the simulation state of the PointerMotionSim instance. When</span>
+<span class="sd">    touch position is provided the pointer will be moved.  When the touch position,</span>
+<span class="sd">    inevitably, goes idle then the simulation will continue moving until the</span>
+<span class="sd">    pointer comes to rest due to braking.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        timestamp (int): The timestamp at which the update occurs.</span>
+<span class="sd">        touch_pos (tuple[int, int] | None): The current touch position as a tuple</span>
+<span class="sd">            (x, y), or None if touch is idle.</span>
+
+<span class="sd">    Example usage:</span>
+<span class="sd">    ```python</span>
+<span class="sd">    a_brakes = 1</span>
+<span class="sd">    sim_instance = PointerMotionSim(a_brakes)</span>
+<span class="sd">    current_timestamp = time.monotonic_ns()</span>
+<span class="sd">    current_touch_pos = (50, 50)</span>
+<span class="sd">    sim_instance.tick(current_timestamp, current_touch_pos)</span>
+<span class="sd">    ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># if touch is idle and motion is stopped then do nothing</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">touch_pos</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">:</span>
+        <span class="c1"># ensure state is cleared to reflect idleness</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">timestamp</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop_motion</span><span class="p">()</span>
+        <span class="k">return</span>
+
+    <span class="c1"># if touch is idle then update initial velocity</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">touch_pos</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_v0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span>
+
+    <span class="c1"># reject zero-time ticks</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">==</span> <span class="n">timestamp</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="c1"># update simulation state</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_last_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">EMPTY_STATE</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">timestamp</span>
+
+    <span class="c1"># update touch data if present</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">touch_pos</span> <span class="o">=</span> <span class="n">touch_pos</span> <span class="k">if</span> <span class="n">touch_pos</span> <span class="k">else</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["toc.integrate"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.081f42fc.min.js"></script>
+      
+    
+  </body>
+</html>
