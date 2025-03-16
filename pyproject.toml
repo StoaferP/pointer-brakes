@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = "MIT"
 keywords = []
-authors = [{ name = "ChrisArgyle", email = "chrisisdiy@gmail.com" }]
+authors = [{ name = "StoaferP", email = "chrisisdiy@gmail.com" }]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
@@ -24,9 +24,9 @@ classifiers = [
 ]
 
 [project.urls]
-Documentation = "https://github.com/ChrisArgyle/pointer-brakes#readme"
-Issues = "https://github.com/ChrisArgyle/pointer-brakes/issues"
-Source = "https://github.com/ChrisArgyle/pointer-brakes"
+Documentation = "https://github.com/StoaferP/pointer-brakes#readme"
+Issues = "https://github.com/StoaferP/pointer-brakes/issues"
+Source = "https://github.com/StoaferP/pointer-brakes"
 
 [tool.hatch.env]
 requires = ["hatch-pip-compile"]
